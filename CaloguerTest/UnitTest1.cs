@@ -1,4 +1,5 @@
 ﻿using System;
+using BusinessObjectLayer;
 using DataAccessLayer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -19,11 +20,15 @@ namespace CaloguerTest
         }
 
         [TestMethod]
-        public void GetData()
+        public void GetAllData()
         {
-            GoogleSheetsManager googleSheetsManager = new GoogleSheetsManager();
-            var response = googleSheetsManager.GetData(TEST_SHEET, "Sheet1!A1:A2");
-            Assert.IsTrue(response != null && response.Count > 0);
+            //GoogleSheetsManager googleSheetsManager = new GoogleSheetsManager();
+            //var response = googleSheetsManager.GetData(TEST_SHEET, "Sheet1!A1:A2");
+            //Assert.IsTrue(response != null && response.Count > 0);
+            DataManager dataManager = new DataManager(new GoogleSheetsManager());
+            dataManager.SheetId = TEST_SHEET;
+            var response = dataManager.GetAllData();
+            Assert.IsNotNull(response);
         }
 
         [TestMethod]

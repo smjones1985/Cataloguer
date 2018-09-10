@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace DataAccessLayer
 {
-    public class GoogleSheetsManager
+    public class GoogleSheetsManager : IGoogleSheetsManager
     {
         // If modifying these scopes, delete your previously saved credentials
         // at ~/.credentials/sheets.googleapis.com-dotnet-quickstart.json
