@@ -1,4 +1,5 @@
 ﻿
+using BusinessObjectLayer;
 using System.Collections.Generic;
 
 namespace DataAccessLayer
@@ -9,11 +10,11 @@ namespace DataAccessLayer
 
         void InsertData(string id, object catalogueItem);
 
-        IList<object> GetDataById(string id);
+        CatalogueRecord GetDataById(string id);
 
         void UpdateData(string id, object catalogueItem);
 
-        IList<IList<object>> GetAllData();
+        IList<CatalogueRecord> GetAllData();
 
     }
 }

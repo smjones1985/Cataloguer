@@ -25,7 +25,7 @@ namespace CaloguerTest
             //GoogleSheetsManager googleSheetsManager = new GoogleSheetsManager();
             //var response = googleSheetsManager.GetData(TEST_SHEET, "Sheet1!A1:A2");
             //Assert.IsTrue(response != null && response.Count > 0);
-            DataManager dataManager = new DataManager(new GoogleSheetsManager());
+            GoogleSheetsDataManager dataManager = new GoogleSheetsDataManager(new GoogleSheetsManager());
             dataManager.SheetId = TEST_SHEET;
             var response = dataManager.GetAllData();
             Assert.IsNotNull(response);
@@ -38,6 +38,14 @@ namespace CaloguerTest
             string testData = "{ \"Description\": \"InsertTest\"}";
             var response = googleSheetsManager.InsertRecord(TEST_SHEET, "Sheet1!A1:B1", testData);
             Assert.IsTrue(response);
+        }
+
+
+        [TestMethod]
+        public void CreateSheet()
+        {
+            GoogleSheetsManager googleSheetsManager = new GoogleSheetsManager();
+            googleSheetsManager.CreateSheet("TestCreate");
         }
 
     }
