@@ -8,8 +8,7 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using System.IO;
 using System.Threading;
-using BusinessObjectLayer;
-using Newtonsoft.Json;
+
 
 namespace DataAccessLayer
 {
@@ -38,25 +37,13 @@ namespace DataAccessLayer
        
         }
 
-        public IList<CatalogueRecord> GetAllData() 
+        public IList<IList<object>> GetAllData() 
         {
-            var sheetData =  GetSheetData(SheetId, "Sheet1!A:B");
-            return ConvertToCatalogueRecords(sheetData);
+            return GetSheetData(SheetId, "Sheet1!A:B");
+          
         }
 
-        private IList<CatalogueRecord> ConvertToCatalogueRecords(IList<IList<object>> sheetData)
-        {
-            List<CatalogueRecord> returnList = new List<CatalogueRecord>();
-            foreach (var item in sheetData)
-            {
-                returnList.Add(JsonConvert.DeserializeObject<CatalogueRecord>(item.ElementAt(1).ToString()));
-            }
-            return returnList;
-        }
-
-
-
-        public CatalogueRecord GetDataById(string id)
+        public IList<object> GetDataById(string id)
         {
             var responseObjects =  GetSheetData(SheetId, "Sheet1!A:A");
             for (int i = 0; i < responseObjects.Count; i++)
@@ -66,20 +53,13 @@ namespace DataAccessLayer
                     var searchById = GetSheetData(SheetId, String.Format("Sheet1!A{0}:B{0}", i));
                     if(searchById != null && searchById.Any())
                     {
-                        var foundObject =  searchById.First();
-                        return ConvertToCatalogueRecord(foundObject);
+                        return searchById.First();
                     }
                 }
             }
             return null;
         }
 
-        private CatalogueRecord ConvertToCatalogueRecord(IList<object> foundObject)
-        {
-            IList<IList<object>> sheetRecords = new List<IList<object>>();
-            sheetRecords.Add(foundObject);
-            return ConvertToCatalogueRecords(sheetRecords).First();
-        }
 
         public void InsertData(string id, object catalogueItem)
         {
@@ -135,11 +115,11 @@ namespace DataAccessLayer
 
         }
 
-        public bool InsertRecord(string spreadSheetId, string range, object catalogueRecord)
+        public bool InsertRecord(string spreadSheetId, string range, object insertObject)
         {
             string newId = Guid.NewGuid().ToString();
             IList<IList<Object>> valueData = new List<IList<object>>();
-            valueData.Add(new List<object>() { newId, catalogueRecord });
+            valueData.Add(new List<object>() { newId, insertObject });
 
             ValueRange insertRecord = new ValueRange();
             insertRecord.Values = valueData;
@@ -158,7 +138,7 @@ namespace DataAccessLayer
             return false;
         }
 
-        public void UpdateRecord(string id, String spreadsheetId, String range object newData)
+        public void UpdateRecord(string id, String spreadsheetId, String range, object newData)
         {
         }
 
@@ -194,4 +174,4 @@ namespace DataAccessLayer
         }
     }
 }
-}
+

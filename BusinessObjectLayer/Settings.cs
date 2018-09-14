@@ -13,15 +13,7 @@ namespace BusinessObjectLayer
         {
             
 
-            SettingsManager settingsManager = new SettingsManager();
-            SettingsObj = settingsManager.Read();
-            // Check if settings object is null
-
-            // if true call settings.manager.create
-
-            // Call read again
-
-            // Call the DataAccessLayer to create a sheet
+       
         }
 
 

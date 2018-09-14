@@ -18,7 +18,6 @@ namespace DataAccessLayer
 
             // 2. Configure the container (register)
             container.Register<IDataManager, GoogleSheetsDataManager>();
-            container.Register<IGoogleSheetsManager, GoogleSheetsManager>();
 
             // 3. Verify your configuration
             container.Verify();

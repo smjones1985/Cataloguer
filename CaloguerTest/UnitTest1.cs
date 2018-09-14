@@ -25,7 +25,7 @@ namespace CaloguerTest
             //GoogleSheetsManager googleSheetsManager = new GoogleSheetsManager();
             //var response = googleSheetsManager.GetData(TEST_SHEET, "Sheet1!A1:A2");
             //Assert.IsTrue(response != null && response.Count > 0);
-            GoogleSheetsDataManager dataManager = new GoogleSheetsDataManager(new GoogleSheetsManager());
+            GoogleSheetsDataManager dataManager = new GoogleSheetsDataManager();
             dataManager.SheetId = TEST_SHEET;
             var response = dataManager.GetAllData();
             Assert.IsNotNull(response);
