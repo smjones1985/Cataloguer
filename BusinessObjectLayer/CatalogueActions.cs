@@ -12,22 +12,17 @@ namespace BusinessObjectLayer
     {
         public IDataManager DataManager { get; set; }
 
-        public ISettingsManager SettingsManager { get; set; }
-
-        public Settings ConfigureApplication()
+        public void ConfigureApplication()
         {
-            Settings currentSettings;
-            SettingsManager = new SettingsManager();
-            //SettingsObj = SettingsManager.Read();
+            var id = Properties.Settings.Default["SheetId"];
+
             // Check if settings object is null
-            //if not null, assign to current settings and return
-            // if true call settings.manager.create
-
-            // Call read again
-
+            //if null or empty, 
             // Call the DataAccessLayer to create a sheet
-
-            //store sheet name inside of 
+            // store sheet id in settings
+            //  Properties.Settings.Default["SheetId"] = x
+            //  then save change like so:
+            //  Properties.Settings.Default.Save();
 
             throw new NotImplementedException();
         }
