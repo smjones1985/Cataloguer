@@ -27,16 +27,27 @@ namespace Cataloguer
         public MainWindow()
         {
             InitializeComponent();
-            if(!CatalogueActions.IsApplicationReady())
+            BusinessObjectLayer.ContainerManager.IntializeContainer();
+            ReadyCheck();
+        }
+
+        private void ReadyCheck()
+        {
+            if (CatalogueActions == null)
+            {
+                CatalogueActions = BusinessObjectLayer.ContainerManager.ProvideImplementation(CatalogueActions);
+            }
+
+            if (!CatalogueActions.IsApplicationReady())
             {
                 var result = MessageBox.Show("In order to run this application, you need to connect\n" +
                     "to google to allow you to create a sheet. Do you want to continue?", "Setup", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
-                if(result == MessageBoxResult.Cancel)
+                if (result == MessageBoxResult.Cancel)
                 {
                     this.Close();
+                    return;
                 }
                 CatalogueActions.ConfigureApplication();
-                
             }
         }
 
