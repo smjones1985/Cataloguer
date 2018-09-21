@@ -5,7 +5,7 @@ namespace DataAccessLayer
 {
     public interface IDataManager
     {
-        void Configure(object configuration);
+        bool Readiness { get;}
 
         void InsertData(string id, object catalogueItem);
 
@@ -15,5 +15,6 @@ namespace DataAccessLayer
 
         IList<IList<object>> GetAllData();
 
+        void Configure();
     }
 }

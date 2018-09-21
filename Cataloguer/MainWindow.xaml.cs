@@ -22,12 +22,22 @@ namespace Cataloguer
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ICatalogueActions CatalogueActions { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
-           
-            Settings settings = new Settings();
-            settings.ConfigureApplications();
+            if(!CatalogueActions.IsApplicationReady())
+            {
+                var result = MessageBox.Show("In order to run this application, you need to connect\n" +
+                    "to google to allow you to create a sheet. Do you want to continue?", "Setup", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
+                if(result == MessageBoxResult.Cancel)
+                {
+                    this.Close();
+                }
+                CatalogueActions.ConfigureApplication();
+                
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

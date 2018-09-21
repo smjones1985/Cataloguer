@@ -46,7 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationConfiguration.cs" />
+    <Compile Include="ContainerManager.cs" />
+    <Compile Include="ICatalogueActions.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="CatalogueActions.cs" />
     <Compile Include="CatalogueRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

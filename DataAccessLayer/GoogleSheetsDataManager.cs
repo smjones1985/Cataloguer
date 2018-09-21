@@ -15,6 +15,7 @@ namespace DataAccessLayer
     public class GoogleSheetsDataManager : IDataManager
     {
         public string SheetId { get; set; }
+        public const string SHEET_NAME = "CatalogueData";
         private SheetsService service;
         private SheetsService Service
         {
@@ -31,6 +32,16 @@ namespace DataAccessLayer
                 service = value;
             }
         }
+
+        public bool Readiness
+        {
+            get
+            {
+                var id = Properties.Settings.Default["SheetId"];
+                return !(id == null || String.IsNullOrEmpty(id.ToString()));
+            }
+        }
+
 
         public GoogleSheetsDataManager()
         {
@@ -67,11 +78,6 @@ namespace DataAccessLayer
         }
 
         public void UpdateData(string id, object catalogueItem)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object CreateTable(string name)
         {
             throw new NotImplementedException();
         }
@@ -158,7 +164,7 @@ namespace DataAccessLayer
             return values;
         }
 
-        public void CreateSheet(string sheetName)
+        public string CreateSheet(string sheetName)
         {
             Spreadsheet spreadsheet = new Spreadsheet();
             spreadsheet.Properties = new SpreadsheetProperties()
@@ -171,6 +177,24 @@ namespace DataAccessLayer
             {
                 throw new Exception("SpreadSheet creation failed");
             }
+            return response.SpreadsheetId;
+
+        }
+
+        public void Configure()
+        {
+            var id = Properties.Settings.Default["SheetId"];
+            if (id == null || String.IsNullOrEmpty(id.ToString()))
+            {
+                id = CreateSheet(SHEET_NAME);
+                if(String.IsNullOrEmpty(id.ToString()))
+                {
+                    throw new Exception("Unable to create data sheet");
+                }
+                Properties.Settings.Default["SheetId"] = id.ToString();
+                Properties.Settings.Default.Save();
+            }
+            SheetId = id.ToString();
         }
     }
 }

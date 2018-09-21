@@ -8,23 +8,18 @@ using System.Threading.Tasks;
 
 namespace BusinessObjectLayer
 {
-    public class CatalogueActions
+    public class CatalogueActions : ICatalogueActions
     {
         public IDataManager DataManager { get; set; }
 
+        public CatalogueActions(IDataManager dataManager)
+        {
+            DataManager = dataManager;
+        }
+
         public void ConfigureApplication()
         {
-            var id = Properties.Settings.Default["SheetId"];
-
-            // Check if settings object is null
-            //if null or empty, 
-            // Call the DataAccessLayer to create a sheet
-            // store sheet id in settings
-            //  Properties.Settings.Default["SheetId"] = x
-            //  then save change like so:
-            //  Properties.Settings.Default.Save();
-
-            throw new NotImplementedException();
+            DataManager.Configure();
         }
 
         private List<CatalogueRecord> Convert(IList<IList<object>> sheetData)
@@ -37,5 +32,9 @@ namespace BusinessObjectLayer
             return returnList;
         }
 
+        public bool IsApplicationReady()
+        {
+            return DataManager.Readiness;
+        }
     }
 }
