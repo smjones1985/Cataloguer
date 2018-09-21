@@ -84,7 +84,7 @@ namespace DataAccessLayer
             return false;
         }
 
-        public void UpdateRecord(string id, String spreadsheetId, String range object newData)
+        public void UpdateRecord(string id, String spreadsheetId, String range, object newData)
         {
         }
 

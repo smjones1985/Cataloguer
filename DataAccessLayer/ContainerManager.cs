@@ -11,17 +11,16 @@ namespace DataAccessLayer
     {
         static readonly Container container;
 
-        static ContainerManager()
-        {
-            // 1. Create a new Simple Injector container
-            container = new Container();
+        //static ContainerManager()
+        //{
+        //    // 1. Create a new Simple Injector container
+        //    container = new Container();
 
-            // 2. Configure the container (register)
-            container.Register<IDataManager, GoogleSheetsDataManager>();
-            container.Register<IGoogleSheetsManager, GoogleSheetsManager>();
+        //    // 2. Configure the container (register)
+        //    container.Register<IDataManager, GoogleSheetsDataManager>();
 
-            // 3. Verify your configuration
-            container.Verify();
-        }
+        //    // 3. Verify your configuration
+        //    container.Verify();
+        //}
     }
 }

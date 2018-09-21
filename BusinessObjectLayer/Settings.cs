@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BusinessObjectLayer
 {
-    public static class ApplicationConfiguration
+    public class Settings
     {
-        public static string SheetId { get; set; }
+        public string SheetId { get; set; }
     }
 }

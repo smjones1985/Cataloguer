@@ -8,14 +8,14 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using System.IO;
 using System.Threading;
-using BusinessObjectLayer;
-using Newtonsoft.Json;
+
 
 namespace DataAccessLayer
 {
     public class GoogleSheetsDataManager : IDataManager
     {
         public string SheetId { get; set; }
+        public const string SHEET_NAME = "CatalogueData";
         private SheetsService service;
         private SheetsService Service
         {
@@ -33,30 +33,28 @@ namespace DataAccessLayer
             }
         }
 
+        public bool Readiness
+        {
+            get
+            {
+                var id = Properties.Settings.Default["SheetId"];
+                return !(id == null || String.IsNullOrEmpty(id.ToString()));
+            }
+        }
+
+
         public GoogleSheetsDataManager()
         {
        
         }
 
-        public IList<CatalogueRecord> GetAllData() 
+        public IList<IList<object>> GetAllData() 
         {
-            var sheetData =  GetSheetData(SheetId, "Sheet1!A:B");
-            return ConvertToCatalogueRecords(sheetData);
+            return GetSheetData(SheetId, "Sheet1!A:B");
+          
         }
 
-        private IList<CatalogueRecord> ConvertToCatalogueRecords(IList<IList<object>> sheetData)
-        {
-            List<CatalogueRecord> returnList = new List<CatalogueRecord>();
-            foreach (var item in sheetData)
-            {
-                returnList.Add(JsonConvert.DeserializeObject<CatalogueRecord>(item.ElementAt(1).ToString()));
-            }
-            return returnList;
-        }
-
-
-
-        public CatalogueRecord GetDataById(string id)
+        public IList<object> GetDataById(string id)
         {
             var responseObjects =  GetSheetData(SheetId, "Sheet1!A:A");
             for (int i = 0; i < responseObjects.Count; i++)
@@ -66,20 +64,13 @@ namespace DataAccessLayer
                     var searchById = GetSheetData(SheetId, String.Format("Sheet1!A{0}:B{0}", i));
                     if(searchById != null && searchById.Any())
                     {
-                        var foundObject =  searchById.First();
-                        return ConvertToCatalogueRecord(foundObject);
+                        return searchById.First();
                     }
                 }
             }
             return null;
         }
 
-        private CatalogueRecord ConvertToCatalogueRecord(IList<object> foundObject)
-        {
-            IList<IList<object>> sheetRecords = new List<IList<object>>();
-            sheetRecords.Add(foundObject);
-            return ConvertToCatalogueRecords(sheetRecords).First();
-        }
 
         public void InsertData(string id, object catalogueItem)
         {
@@ -87,11 +78,6 @@ namespace DataAccessLayer
         }
 
         public void UpdateData(string id, object catalogueItem)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object CreateTable(string name)
         {
             throw new NotImplementedException();
         }
@@ -135,11 +121,11 @@ namespace DataAccessLayer
 
         }
 
-        public bool InsertRecord(string spreadSheetId, string range, object catalogueRecord)
+        public bool InsertRecord(string spreadSheetId, string range, object insertObject)
         {
             string newId = Guid.NewGuid().ToString();
             IList<IList<Object>> valueData = new List<IList<object>>();
-            valueData.Add(new List<object>() { newId, catalogueRecord });
+            valueData.Add(new List<object>() { newId, insertObject });
 
             ValueRange insertRecord = new ValueRange();
             insertRecord.Values = valueData;
@@ -158,7 +144,7 @@ namespace DataAccessLayer
             return false;
         }
 
-        public void UpdateRecord(string id, String spreadsheetId, String range object newData)
+        public void UpdateRecord(string id, String spreadsheetId, String range, object newData)
         {
         }
 
@@ -178,7 +164,7 @@ namespace DataAccessLayer
             return values;
         }
 
-        public void CreateSheet(string sheetName)
+        public string CreateSheet(string sheetName)
         {
             Spreadsheet spreadsheet = new Spreadsheet();
             spreadsheet.Properties = new SpreadsheetProperties()
@@ -191,7 +177,25 @@ namespace DataAccessLayer
             {
                 throw new Exception("SpreadSheet creation failed");
             }
+            return response.SpreadsheetId;
+
+        }
+
+        public void Configure()
+        {
+            var id = Properties.Settings.Default["SheetId"];
+            if (id == null || String.IsNullOrEmpty(id.ToString()))
+            {
+                id = CreateSheet(SHEET_NAME);
+                if(String.IsNullOrEmpty(id.ToString()))
+                {
+                    throw new Exception("Unable to create data sheet");
+                }
+                Properties.Settings.Default["SheetId"] = id.ToString();
+                Properties.Settings.Default.Save();
+            }
+            SheetId = id.ToString();
         }
     }
 }
-}
+

@@ -12,6 +12,7 @@ namespace CaloguerTest
         //I created this test sheet and gave anyone with the link the ability to edit it
         private const string TEST_SHEET = "1abeQC3jABk5_9ceClBbUvobIfA81eFO6_pEiZzZ0C_w";
 
+
         [TestMethod]
         public void EstablishCredentials()
         {
@@ -25,7 +26,7 @@ namespace CaloguerTest
             //GoogleSheetsManager googleSheetsManager = new GoogleSheetsManager();
             //var response = googleSheetsManager.GetData(TEST_SHEET, "Sheet1!A1:A2");
             //Assert.IsTrue(response != null && response.Count > 0);
-            GoogleSheetsDataManager dataManager = new GoogleSheetsDataManager(new GoogleSheetsManager());
+            GoogleSheetsDataManager dataManager = new GoogleSheetsDataManager();
             dataManager.SheetId = TEST_SHEET;
             var response = dataManager.GetAllData();
             Assert.IsNotNull(response);
