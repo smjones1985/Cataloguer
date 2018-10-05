@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="203,215,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-
+        <DataGrid x:Name="dataGrideForCatalogue" HorizontalAlignment="Left" Height="314" Margin="350,54,0,0" VerticalAlignment="Top" Width="393" IsSynchronizedWithCurrentItem="False"/>
+        <Button x:Name="addRecordButton" Content="Add" HorizontalAlignment="Left" Margin="95,174,0,0" VerticalAlignment="Top" Width="75" Click="addRecordButton_Click"/>
+        <TextBox x:Name="itemEntryText" HorizontalAlignment="Left" Height="24" Margin="76,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>
