@@ -4,9 +4,8 @@ namespace BusinessObjectLayer
 {
     public interface ICatalogueActions
     {
-        IDataManager DataManager { get; set; }
-
         void ConfigureApplication();
         bool IsApplicationReady();
+        void AddRecord(string description);
     }
 }
