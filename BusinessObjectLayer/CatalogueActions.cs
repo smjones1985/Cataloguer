@@ -10,7 +10,7 @@ namespace BusinessObjectLayer
 {
     public class CatalogueActions : ICatalogueActions
     {
-        public IDataManager DataManager { get; set; }
+        private IDataManager DataManager { get; set; }
 
         public CatalogueActions(IDataManager dataManager)
         {
@@ -36,5 +36,15 @@ namespace BusinessObjectLayer
         {
             return DataManager.Readiness;
         }
+
+        public void AddRecord(string description)
+        {
+            CatalogueRecord catalogueRecord = new CatalogueRecord() { Id = Guid.NewGuid(), Description = description};
+            DataManager.InsertData(catalogueRecord.Id.ToString(), catalogueRecord);
+        }
+        //add a method that calls the datamanager to get all records. 
+
+        //add methods to add and delete records using the data manager
+        
     }
 }
