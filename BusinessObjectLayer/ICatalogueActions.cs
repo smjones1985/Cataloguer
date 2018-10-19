@@ -6,6 +6,7 @@ namespace BusinessObjectLayer
     {
         void ConfigureApplication();
         bool IsApplicationReady();
-        void AddRecord(string description);
+        CatalogueRecord AddRecord(string description);
+        CatalogueRecord GetRecordById(string id);
     }
 }

@@ -7,14 +7,16 @@ namespace DataAccessLayer
     {
         bool Readiness { get;}
 
-        void InsertData(string id, object catalogueItem);
+        T InsertData<T>(string id, T catalogueItem);
 
-        IList<object> GetDataById(string id);
+        T GetDataById<T>(string id);
 
         void UpdateData(string id, object catalogueItem);
 
-        IList<IList<object>> GetAllData();
+        IList<T> GetAllData<T>();
 
         void Configure();
+
+        int GetRecordCount();
     }
 }
