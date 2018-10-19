@@ -1,5 +1,6 @@
 ﻿using BusinessObjectLayer;
 using DataAccessLayer;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,13 @@ namespace CaloguerTest
             {
                 if(testList == null)
                 {
-                    var testId = Guid.NewGuid();
+                    var testId = Guid.Parse("{6cd6f2d8-0111-4c14-b2bd-6868b5122fba}");
                     var testDescription = "TestDescription1";
-                    testList = new List<IList<object>>
-                    {
-                        new List<object>() { testId, testDescription }
-                    };
+                    object testObj = new object();
+                    CatalogueRecord catalogueRecord = new CatalogueRecord() { Id = testId, Description = testDescription };
+                    testList = new List<IList<object>>();
+                    List<object> dataMembers = new List<object>() { testId, JsonConvert.SerializeObject(catalogueRecord) };
+                    testList.Add(dataMembers);
                 }
                 return testList;
             }
@@ -35,17 +37,25 @@ namespace CaloguerTest
             
         }
 
-        public IList<IList<object>> GetAllData()
+        public IList<T> GetAllData<T>()
         {
             throw new NotImplementedException();
         }
 
-        public IList<object> GetDataById(string id)
+        public T GetDataById<T>(string id)
         {
-            throw new NotImplementedException();
+            foreach (var item in TestList)
+            {
+                string searchId = item[0].ToString();
+                if(id == searchId)
+                {
+                    return Convert<T>(item);
+                }
+            }
+            return default(T);
         }
 
-        public void InsertData(string id, object catalogueItem)
+        public T InsertData<T>(string id, T catalogueItem)
         {
             throw new NotImplementedException();
         }
@@ -53,6 +63,26 @@ namespace CaloguerTest
         public void UpdateData(string id, object catalogueItem)
         {
             throw new NotImplementedException();
+        }
+
+        public int GetRecordCount()
+        {
+            throw new NotImplementedException();
+        }
+
+        private List<T> Convert<T>(IList<IList<object>> sheetData)
+        {
+            List<T> returnList = new List<T>();
+            foreach (var item in sheetData)
+            {
+                returnList.Add(JsonConvert.DeserializeObject<T>(item.ElementAt(1).ToString()));
+            }
+            return returnList;
+        }
+
+        private T Convert<T>(IList<object> sheetItem)
+        {
+            return JsonConvert.DeserializeObject<T>(sheetItem.ElementAt(1).ToString());
         }
     }
 }

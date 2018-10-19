@@ -8,11 +8,11 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using System.IO;
 using System.Threading;
-
+using Newtonsoft.Json;
 
 namespace DataAccessLayer
 {
-    public class GoogleSheetsDataManager : IDataManager
+    public class GoogleSheetsDataManager : GoogleSheets, IDataManager
     {
         public string SheetId { get; set; }
         public const string SHEET_NAME = "CatalogueData";
@@ -48,13 +48,12 @@ namespace DataAccessLayer
        
         }
 
-        public IList<IList<object>> GetAllData() 
+        public IList<T> GetAllData<T>() 
         {
-            return GetSheetData(SheetId, "Sheet1!A:B");
-          
+            return Convert<T>(GetSheetData(SheetId, "Sheet1!A:B"));
         }
 
-        public IList<object> GetDataById(string id)
+        public T GetDataById<T>(string id)
         {
             var responseObjects =  GetSheetData(SheetId, "Sheet1!A:A");
             for (int i = 0; i < responseObjects.Count; i++)
@@ -64,15 +63,15 @@ namespace DataAccessLayer
                     var searchById = GetSheetData(SheetId, String.Format("Sheet1!A{0}:B{0}", i));
                     if(searchById != null && searchById.Any())
                     {
-                        return searchById.First();
+                        return Convert<T>(searchById.First());
                     }
                 }
             }
-            return null;
+            return default(T);
         }
 
 
-        public void InsertData(string id, object catalogueItem)
+        public T InsertData<T>(string id, T catalogueItem)
         {
             throw new NotImplementedException();
         }
@@ -92,95 +91,6 @@ namespace DataAccessLayer
         static string[] Scopes = { SheetsService.Scope.Spreadsheets, SheetsService.Scope.SpreadsheetsReadonly };
         static string ApplicationName = "Google Sheets API .NET Quickstart";
 
-
-
-        public void EstablishCredentials()
-        {
-            UserCredential credential;
-
-            using (var stream =
-                new FileStream("credentialsUpdated.json", FileMode.Open, FileAccess.Read))
-            {
-                string credPath = "token.json";
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
-                Console.WriteLine("Credential file saved to: " + credPath);
-            }
-
-            // Create Google Sheets API service.
-            Service = new SheetsService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
-
-
-        }
-
-        public bool InsertRecord(string spreadSheetId, string range, object insertObject)
-        {
-            string newId = Guid.NewGuid().ToString();
-            IList<IList<Object>> valueData = new List<IList<object>>();
-            valueData.Add(new List<object>() { newId, insertObject });
-
-            ValueRange insertRecord = new ValueRange();
-            insertRecord.Values = valueData;
-
-            SpreadsheetsResource.ValuesResource.AppendRequest request =
-                    Service.Spreadsheets.Values.Append(insertRecord, spreadSheetId, range);
-
-            request.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
-
-            var response = request.Execute();
-
-            if (response.Updates.UpdatedRows != null && response.Updates.UpdatedRows > 0)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public void UpdateRecord(string id, String spreadsheetId, String range, object newData)
-        {
-        }
-
-
-        public IList<IList<Object>> GetSheetData(String spreadsheetId, String range)
-        {
-            // Define request parameters.
-            //spreadsheetId = "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms";
-            //range = "Class Data!A2:E";
-            SpreadsheetsResource.ValuesResource.GetRequest request =
-                    Service.Spreadsheets.Values.Get(spreadsheetId, range);
-
-            // Prints the names and majors of students in a sample spreadsheet:
-            // https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-            ValueRange response = request.Execute();
-            IList<IList<Object>> values = response.Values;
-            return values;
-        }
-
-        public string CreateSheet(string sheetName)
-        {
-            Spreadsheet spreadsheet = new Spreadsheet();
-            spreadsheet.Properties = new SpreadsheetProperties()
-            {
-                Title = sheetName
-            };
-            SpreadsheetsResource.CreateRequest createRequest = Service.Spreadsheets.Create(spreadsheet);
-            var response = createRequest.Execute();
-            if (response == null || response.SpreadsheetId == null)
-            {
-                throw new Exception("SpreadSheet creation failed");
-            }
-            return response.SpreadsheetId;
-
-        }
-
         public void Configure()
         {
             var id = Properties.Settings.Default["SheetId"];
@@ -195,6 +105,26 @@ namespace DataAccessLayer
                 Properties.Settings.Default.Save();
             }
             SheetId = id.ToString();
+        }
+
+        public int GetRecordCount()
+        {
+            return GetSheetData(SheetId, "Sheet1!A").Count;
+        }
+
+        private List<T> Convert<T>(IList<IList<object>> sheetData)
+        {
+            List<T> returnList = new List<T>();
+            foreach (var item in sheetData)
+            {
+                returnList.Add(JsonConvert.DeserializeObject<T>(item.ElementAt(1).ToString()));
+            }
+            return returnList;
+        }
+
+        private T Convert<T>(IList<object> sheetItem)
+        {
+            return JsonConvert.DeserializeObject<T>(sheetItem.ElementAt(1).ToString());
         }
     }
 }

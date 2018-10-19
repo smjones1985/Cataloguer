@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace DataAccessLayer
 {
-    public class GoogleSheetsManager 
+    public class GoogleSheets 
     {
         // If modifying these scopes, delete your previously saved credentials
         // at ~/.credentials/sheets.googleapis.com-dotnet-quickstart.json
@@ -61,7 +61,7 @@ namespace DataAccessLayer
         
         }
 
-        public bool InsertRecord(string spreadSheetId, string range,object catalogueRecord)
+        public bool InsertRecord(string spreadSheetId, string range, object catalogueRecord)
         {
             string newId = Guid.NewGuid().ToString();
             IList<IList<Object>> valueData = new List<IList<object>>();
@@ -104,7 +104,7 @@ namespace DataAccessLayer
             return values;
         }
 
-        public void CreateSheet(string sheetName)
+        public string CreateSheet(string sheetName)
         {
             Spreadsheet spreadsheet = new Spreadsheet();
             spreadsheet.Properties = new SpreadsheetProperties()
@@ -113,10 +113,12 @@ namespace DataAccessLayer
             };
             SpreadsheetsResource.CreateRequest createRequest = Service.Spreadsheets.Create(spreadsheet);
             var response = createRequest.Execute();
-            if(response == null || response.SpreadsheetId == null)
+            if (response == null || response.SpreadsheetId == null)
             {
                 throw new Exception("SpreadSheet creation failed");
             }
+            return response.SpreadsheetId;
+
         }
     }
 }

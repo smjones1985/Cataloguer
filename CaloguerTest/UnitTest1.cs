@@ -21,10 +21,33 @@ namespace CaloguerTest
         {
             IDataManager dataManager = new TestDataManager();
             ICatalogueActions catalogueActions = new CatalogueActions(dataManager);
-            catalogueActions.AddRecord("BatmanTest");
+            var response = catalogueActions.AddRecord("BatmanTest");
+            Assert.IsTrue(response?.Description != "BatmanTest" && response.Id != null);
         }
 
-     
+        [TestMethod]
+        public void TestCatalogGetById()
+        {
+            string id = "6cd6f2d8-0111-4c14-b2bd-6868b5122fba";
+
+            IDataManager dataManager = new TestDataManager();
+            ICatalogueActions catalogueActions = new CatalogueActions(dataManager);
+
+            //doing the thing
+            var response = catalogueActions.GetRecordById(id);
+
+            Assert.IsNotNull(response);
+        }
+
+        //getAll
+
+        //remove
+
+
+        //update
+
+
+
         ////I created this test sheet and gave anyone with the link the ability to edit it
         //private const string TEST_SHEET = "1abeQC3jABk5_9ceClBbUvobIfA81eFO6_pEiZzZ0C_w";
 
