@@ -22,26 +22,22 @@ namespace BusinessObjectLayer
             DataManager.Configure();
         }
 
-        private List<CatalogueRecord> Convert(IList<IList<object>> sheetData)
-        {
-            List<CatalogueRecord> returnList = new List<CatalogueRecord>();
-            foreach (var item in sheetData)
-            {
-                returnList.Add(JsonConvert.DeserializeObject<CatalogueRecord>(item.ElementAt(1).ToString()));
-            }
-            return returnList;
-        }
-
         public bool IsApplicationReady()
         {
             return DataManager.Readiness;
         }
 
-        public void AddRecord(string description)
+        public CatalogueRecord AddRecord(string description)
         {
             CatalogueRecord catalogueRecord = new CatalogueRecord() { Id = Guid.NewGuid(), Description = description};
-            DataManager.InsertData(catalogueRecord.Id.ToString(), catalogueRecord);
+            return DataManager.InsertData(catalogueRecord.Id.ToString(), catalogueRecord);
         }
+
+        public CatalogueRecord GetRecordById(string id)
+        {
+            return DataManager.GetDataById<CatalogueRecord>(id);
+        }
+
         //add a method that calls the datamanager to get all records. 
         public void CollectRecords()
         {
