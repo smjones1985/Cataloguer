@@ -41,15 +41,15 @@ namespace BusinessObjectLayer
         //add a method that calls the datamanager to get all records. 
         public void CollectRecords()
         {
-            DataManager.GetAllData();
+
+            DataManager.GetAllData<string>();
 
         }
         //add methods to add and delete records using the data manager
-        // Don't we already have that on line 40?
-
-        public void DeleteRecord()
+        // Something like this?
+        public void DeleteRecord(string id)
         {
-
+            DataManager.DeleteData(id);
         }
     }
 }
