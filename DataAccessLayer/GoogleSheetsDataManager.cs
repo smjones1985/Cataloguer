@@ -126,6 +126,12 @@ namespace DataAccessLayer
         {
             return JsonConvert.DeserializeObject<T>(sheetItem.ElementAt(1).ToString());
         }
+
+        public void DeleteData(string id)
+        {
+            DeleteData(id);
+            throw new NotImplementedException();
+        }
     }
 }
 
