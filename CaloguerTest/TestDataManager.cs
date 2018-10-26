@@ -88,8 +88,21 @@ namespace CaloguerTest
 
         public void DeleteData(string id)
         {
-            DeleteData(id);
-            throw new NotImplementedException();
+            IList<object> ItemToDelete = null;
+            // Find Item
+            foreach (var item in TestList)
+            {
+                string searchId = item[0].ToString();
+                if (id == searchId)
+                {
+                    ItemToDelete = item;
+                    break;
+                }
+            }
+            if (ItemToDelete != null)
+            {
+                TestList.Remove(ItemToDelete);
+            }
         }
     }
 }
