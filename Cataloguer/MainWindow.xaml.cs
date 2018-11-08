@@ -55,5 +55,13 @@ namespace Cataloguer
                 CatalogueRecords.Add(new CatalogueRecord() { Description = itemEntryText.Text, Id = Guid.NewGuid() });
             }
         }
+
+        //private void DeleteRecordButton_Click(object sender, RoutedEvent e)
+        //{
+        //    if (!String.IsNullOrEmpty(itemEntryText.Text))
+        //    {
+        //        CatalogueRecords.
+        //    }
+        //}
     }
 }

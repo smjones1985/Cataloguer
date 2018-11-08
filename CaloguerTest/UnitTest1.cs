@@ -39,6 +39,28 @@ namespace CaloguerTest
             Assert.IsNotNull(response);
         }
 
+        [TestMethod]
+        public void TestCatalogueDelete()
+        {
+            string id = "6cd6f2d8-0111-4c14-b2bd-6868b5122fba";
+
+            IDataManager dataManager = new TestDataManager();
+            ICatalogueActions catalogueActions = new CatalogueActions(dataManager);
+
+            //doing the thing
+            var response = catalogueActions.GetRecordById(id);
+
+            if (response == null)
+            {
+                throw new Exception();
+            }
+
+            catalogueActions.DeleteRecord(id);
+            response = catalogueActions.GetRecordById(id);
+
+            Assert.IsNull(response);
+        }
+
         //getAll
 
         //remove

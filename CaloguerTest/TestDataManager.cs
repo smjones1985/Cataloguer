@@ -27,6 +27,7 @@ namespace CaloguerTest
                     testList = new List<IList<object>>();
                     List<object> dataMembers = new List<object>() { testId, JsonConvert.SerializeObject(catalogueRecord) };
                     testList.Add(dataMembers);
+                    
                 }
                 return testList;
             }
@@ -83,6 +84,25 @@ namespace CaloguerTest
         private T Convert<T>(IList<object> sheetItem)
         {
             return JsonConvert.DeserializeObject<T>(sheetItem.ElementAt(1).ToString());
+        }
+
+        public void DeleteData(string id)
+        {
+            IList<object> ItemToDelete = null;
+            // Find Item
+            foreach (var item in TestList)
+            {
+                string searchId = item[0].ToString();
+                if (id == searchId)
+                {
+                    ItemToDelete = item;
+                    break;
+                }
+            }
+            if (ItemToDelete != null)
+            {
+                TestList.Remove(ItemToDelete);
+            }
         }
     }
 }
