@@ -11,5 +11,8 @@ namespace BusinessObjectLayer
         public Guid Id { get; set; }
 
         public string Description { get; set; }
+
+        public Categories Category { get; set; }
+
     }
 }

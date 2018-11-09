@@ -1,4 +1,5 @@
-﻿using DataAccessLayer;
+﻿using System.Collections.Generic;
+using DataAccessLayer;
 
 namespace BusinessObjectLayer
 {
@@ -9,5 +10,7 @@ namespace BusinessObjectLayer
         CatalogueRecord AddRecord(string description);
         CatalogueRecord GetRecordById(string id);
         void DeleteRecord(string id);
+        
+        List<CatalogueRecord> GetRecordsByCategory(Categories category);
     }
 }

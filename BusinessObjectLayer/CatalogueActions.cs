@@ -39,17 +39,32 @@ namespace BusinessObjectLayer
         }
 
         //add a method that calls the datamanager to get all records. 
-        public void CollectRecords()
+        public List<CatalogueRecord> CollectRecords()
         {
 
-            DataManager.GetAllData<string>();
-
+            return DataManager.GetAllData<CatalogueRecord>();
+            
         }
         //add methods to add and delete records using the data manager
         // Something like this?
         public void DeleteRecord(string id)
         {
             DataManager.DeleteData(id);
+        }
+
+        public List<CatalogueRecord> GetRecordsByCategory(Categories category)
+        {
+            var catalogeRecords = CollectRecords();
+            List<CatalogueRecord> MatchedRecords = new List<CatalogueRecord>();
+            foreach (CatalogueRecord record in catalogeRecords)
+            {
+                if ( record.Category == category)
+                {
+                    MatchedRecords.Add(record);
+                }
+            }
+
+            return MatchedRecords;
         }
     }
 }

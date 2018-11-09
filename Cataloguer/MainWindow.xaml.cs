@@ -12,6 +12,8 @@ namespace Cataloguer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Categories Category;
+
         public ICatalogueActions CatalogueActions { get; set; }
 
         public ObservableCollection<CatalogueRecord> CatalogueRecords  { get; set; }
@@ -19,6 +21,15 @@ namespace Cataloguer
         public MainWindow()
         {
             InitializeComponent();
+            OptionalWindow optionalWindow = new OptionalWindow();
+            optionalWindow.Show();
+            this.Close();
+        }
+
+        public MainWindow(Categories category)
+        {
+            InitializeComponent();
+            this.Category = category;
             BusinessObjectLayer.ContainerManager.IntializeContainer();
             ReadyCheck();
             if (CatalogueRecords == null)
@@ -26,6 +37,8 @@ namespace Cataloguer
                 CatalogueRecords = new ObservableCollection<CatalogueRecord>();
             }
             dataGrideForCatalogue.ItemsSource = CatalogueRecords;
+            var records = CatalogueActions.GetRecordsByCategory(category);
+            records.ForEach(record => CatalogueRecords.Add(record));
         }
 
         private void ReadyCheck()
@@ -52,7 +65,7 @@ namespace Cataloguer
         {
             if(!String.IsNullOrEmpty(itemEntryText.Text))
             {
-                CatalogueRecords.Add(new CatalogueRecord() { Description = itemEntryText.Text, Id = Guid.NewGuid() });
+                CatalogueRecords.Add(new CatalogueRecord() { Description = itemEntryText.Text, Id = Guid.NewGuid(), Category = this.Category});
             }
         }
 

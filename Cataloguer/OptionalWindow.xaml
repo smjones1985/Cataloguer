@@ -1,0 +1,16 @@
+﻿<Window x:Class="Cataloguer.OptionalWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Cataloguer"
+        mc:Ignorable="d"
+        Title="OptionalWindow" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="Button_Games" Content="Games" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" Margin="10,218,0,0" Height="114" FontFamily="Corbel" FontWeight="Bold" FontSize="48" Click="Button_Games_Click"/>
+        <Button x:Name="Button_Books" Content="Books" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" Margin="568,218,0,0" Height="114" FontFamily="Corbel" FontWeight="Bold" FontSize="48"/>
+        <Button x:Name="Button_Movies" Content="Movies" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" Margin="382,218,0,0" Height="114" FontFamily="Corbel" FontWeight="Bold" FontSize="48"/>
+        <Button x:Name="Button_Music" Content="Music" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" Margin="196,218,0,0" Height="114" FontFamily="Corbel" FontWeight="Bold" FontSize="48"/>
+
+    </Grid>
+</Window>
