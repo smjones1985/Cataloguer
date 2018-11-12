@@ -8,9 +8,9 @@
         Title="OptionalWindow" Height="450" Width="800">
     <Grid>
         <Button x:Name="Button_Games" Content="Games" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" Margin="10,218,0,0" Height="114" FontFamily="Corbel" FontWeight="Bold" FontSize="48" Click="Button_Games_Click"/>
-        <Button x:Name="Button_Books" Content="Books" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" Margin="568,218,0,0" Height="114" FontFamily="Corbel" FontWeight="Bold" FontSize="48"/>
-        <Button x:Name="Button_Movies" Content="Movies" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" Margin="382,218,0,0" Height="114" FontFamily="Corbel" FontWeight="Bold" FontSize="48"/>
-        <Button x:Name="Button_Music" Content="Music" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" Margin="196,218,0,0" Height="114" FontFamily="Corbel" FontWeight="Bold" FontSize="48"/>
+        <Button x:Name="Button_Books" Content="Books" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" Margin="568,218,0,0" Height="114" FontFamily="Corbel" FontWeight="Bold" FontSize="48" Click="Button_Books_Click"/>
+        <Button x:Name="Button_Movies" Content="Movies" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" Margin="382,218,0,0" Height="114" FontFamily="Corbel" FontWeight="Bold" FontSize="48" Click="Button_Movies_Click"/>
+        <Button x:Name="Button_Music" Content="Music" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" Margin="196,218,0,0" Height="114" FontFamily="Corbel" FontWeight="Bold" FontSize="48" Click="Button_Music_Click"/>
 
     </Grid>
 </Window>

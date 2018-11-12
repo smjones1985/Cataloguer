@@ -54,9 +54,9 @@ namespace BusinessObjectLayer
 
         public List<CatalogueRecord> GetRecordsByCategory(Categories category)
         {
-            var catalogeRecords = CollectRecords();
+            var catalogueRecords = CollectRecords();
             List<CatalogueRecord> MatchedRecords = new List<CatalogueRecord>();
-            foreach (CatalogueRecord record in catalogeRecords)
+            foreach (CatalogueRecord record in catalogueRecords)
             {
                 if ( record.Category == category)
                 {

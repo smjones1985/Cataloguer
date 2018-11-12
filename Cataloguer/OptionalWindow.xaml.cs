@@ -33,5 +33,29 @@ namespace Cataloguer
             this.Close();
 
         }
+
+        private void Button_Music_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindowObj = new MainWindow(Categories.Music);
+            mainWindowObj.Show();
+
+            this.Close();
+        }
+
+        private void Button_Movies_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindowObj = new MainWindow(Categories.Movies);
+            mainWindowObj.Show();
+
+            this.Close();
+        }
+
+        private void Button_Books_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindowObj = new MainWindow(Categories.Books);
+            mainWindowObj.Show();
+
+            this.Close();
+        }
     }
 }
