@@ -49,6 +49,7 @@
     <Compile Include="Categories.cs" />
     <Compile Include="ContainerManager.cs" />
     <Compile Include="ICatalogueActions.cs" />
+    <Compile Include="Record.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="CatalogueActions.cs" />
     <Compile Include="CatalogueRecord.cs" />

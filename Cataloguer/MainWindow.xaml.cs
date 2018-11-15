@@ -16,7 +16,7 @@ namespace Cataloguer
 
         public ICatalogueActions CatalogueActions { get; set; }
 
-        public ObservableCollection<CatalogueRecord> CatalogueRecords  { get; set; }
+        public ObservableCollection<Record> CatalogueRecords  { get; set; }
 
         public MainWindow()
         {
@@ -34,7 +34,7 @@ namespace Cataloguer
             ReadyCheck();
             if (CatalogueRecords == null)
             {
-                CatalogueRecords = new ObservableCollection<CatalogueRecord>();
+                CatalogueRecords = new ObservableCollection<Record>();
             }
             dataGrideForCatalogue.ItemsSource = CatalogueRecords;
             var records = CatalogueActions.GetRecordsByCategory(category);

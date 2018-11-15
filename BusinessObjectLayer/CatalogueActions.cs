@@ -29,8 +29,7 @@ namespace BusinessObjectLayer
 
         public CatalogueRecord AddRecord(string description)
         {
-            CatalogueRecord catalogueRecord = new CatalogueRecord() { Id = Guid.NewGuid(), Description = description};
-            return DataManager.InsertData(catalogueRecord.Id.ToString(), catalogueRecord);
+            throw new NotImplementedException();
         }
 
         public CatalogueRecord GetRecordById(string id)
@@ -62,6 +61,12 @@ namespace BusinessObjectLayer
                 }
             }
             return MatchedRecords;
+        }
+
+        public CatalogueRecord AddRecord(string description, Categories category)
+        {
+            CatalogueRecord catalogueRecord = new CatalogueRecord() { Id = Guid.NewGuid(), Description = description, Category = category };
+            return DataManager.InsertData(catalogueRecord.Id.ToString(), catalogueRecord);
         }
     }
 }

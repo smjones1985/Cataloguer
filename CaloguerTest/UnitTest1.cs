@@ -21,7 +21,7 @@ namespace CaloguerTest
         {
             IDataManager dataManager = new TestDataManager();
             ICatalogueActions catalogueActions = new CatalogueActions(dataManager);
-            var response = catalogueActions.AddRecord("BatmanTest");
+            var response = catalogueActions.AddRecord("Batman", Categories.Movies);
             Assert.IsTrue(response?.Description != "BatmanTest" && response.Id != null);
         }
 

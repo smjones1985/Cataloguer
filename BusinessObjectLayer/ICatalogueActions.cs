@@ -7,7 +7,7 @@ namespace BusinessObjectLayer
     {
         void ConfigureApplication();
         bool IsApplicationReady();
-        CatalogueRecord AddRecord(string description);
+        CatalogueRecord AddRecord(string description, Categories category);
         CatalogueRecord GetRecordById(string id);
         void DeleteRecord(string id);
         

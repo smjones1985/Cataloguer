@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace BusinessObjectLayer
 {
-    public class CatalogueRecord : Record
+    public class Record
     {
-        public Categories Category { get; set; }
+        // Information about the item
+        public Guid Id { get; set; }
 
+        public string Description { get; set; }
     }
 }
