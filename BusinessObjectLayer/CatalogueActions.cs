@@ -39,11 +39,9 @@ namespace BusinessObjectLayer
         }
 
         //add a method that calls the datamanager to get all records. 
-        public List<CatalogueRecord> CollectRecords()
+        public IList<CatalogueRecord> CollectRecords()
         {
-
-            return DataManager.GetAllData<CatalogueRecord>();
-            
+            return DataManager.GetAllData<CatalogueRecord>();      
         }
         //add methods to add and delete records using the data manager
         // Something like this?
@@ -63,7 +61,6 @@ namespace BusinessObjectLayer
                     MatchedRecords.Add(record);
                 }
             }
-
             return MatchedRecords;
         }
     }

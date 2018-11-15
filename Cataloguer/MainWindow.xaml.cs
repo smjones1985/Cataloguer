@@ -30,7 +30,7 @@ namespace Cataloguer
         {
             InitializeComponent();
             this.Category = category;
-            BusinessObjectLayer.ContainerManager.IntializeContainer();
+            ContainerManager.IntializeContainer();
             ReadyCheck();
             if (CatalogueRecords == null)
             {

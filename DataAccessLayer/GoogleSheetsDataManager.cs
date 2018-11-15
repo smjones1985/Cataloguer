@@ -37,8 +37,8 @@ namespace DataAccessLayer
         {
             get
             {
-                var id = Properties.Settings.Default["SheetId"];
-                return !(id == null || String.IsNullOrEmpty(id.ToString()));
+                SheetId = Properties.Settings.Default["SheetId"]?.ToString();
+                return !(String.IsNullOrEmpty(SheetId));
             }
         }
 
@@ -115,9 +115,12 @@ namespace DataAccessLayer
         private List<T> Convert<T>(IList<IList<object>> sheetData)
         {
             List<T> returnList = new List<T>();
-            foreach (var item in sheetData)
+            if (sheetData != null)
             {
-                returnList.Add(JsonConvert.DeserializeObject<T>(item.ElementAt(1).ToString()));
+                foreach (var item in sheetData)
+                {
+                    returnList.Add(JsonConvert.DeserializeObject<T>(item.ElementAt(1).ToString()));
+                }
             }
             return returnList;
         }
