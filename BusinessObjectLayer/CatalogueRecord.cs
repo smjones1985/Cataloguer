@@ -10,5 +10,7 @@ namespace BusinessObjectLayer
     {
         public Categories Category { get; set; }
 
+        // Information about the item
+        public Guid Id { get; set; }
     }
 }

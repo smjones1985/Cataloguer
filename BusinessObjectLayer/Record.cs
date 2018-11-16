@@ -8,9 +8,6 @@ namespace BusinessObjectLayer
 {
     public class Record
     {
-        // Information about the item
-        public Guid Id { get; set; }
-
         public string Description { get; set; }
     }
 }
