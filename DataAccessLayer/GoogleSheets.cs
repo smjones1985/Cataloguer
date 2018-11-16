@@ -61,11 +61,10 @@ namespace DataAccessLayer
         
         }
 
-        public bool InsertRecord(string spreadSheetId, string range, object catalogueRecord)
+        public bool InsertRecord(string spreadSheetId, string range, string id, object catalogueRecord)
         {
-            string newId = Guid.NewGuid().ToString();
             IList<IList<Object>> valueData = new List<IList<object>>();
-            valueData.Add(new List<object>() { newId, catalogueRecord });
+            valueData.Add(new List<object>() { id, catalogueRecord });
 
             ValueRange insertRecord = new ValueRange();
             insertRecord.Values = valueData;

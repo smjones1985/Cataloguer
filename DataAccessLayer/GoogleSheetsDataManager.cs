@@ -73,7 +73,13 @@ namespace DataAccessLayer
 
         public T InsertData<T>(string id, T catalogueItem)
         {
-            throw new NotImplementedException();
+
+            var response = InsertRecord(SheetId, "Sheet1!A1:B1", id, JsonConvert.SerializeObject(catalogueItem));
+            if(response)
+            {
+                return catalogueItem;
+            }
+            return default(T);
         }
 
         public void UpdateData(string id, object catalogueItem)

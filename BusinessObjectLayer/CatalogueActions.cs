@@ -65,8 +65,16 @@ namespace BusinessObjectLayer
 
         public CatalogueRecord AddRecord(string description, Categories category)
         {
-            CatalogueRecord catalogueRecord = new CatalogueRecord() { Id = Guid.NewGuid(), Description = description, Category = category };
-            return DataManager.InsertData(catalogueRecord.Id.ToString(), catalogueRecord);
+            try
+            {
+                CatalogueRecord catalogueRecord = new CatalogueRecord() { Id = Guid.NewGuid(), Description = description, Category = category };
+                return DataManager.InsertData(catalogueRecord.Id.ToString(), catalogueRecord);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+
         }
     }
 }

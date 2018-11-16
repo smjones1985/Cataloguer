@@ -43,10 +43,7 @@ namespace Cataloguer
 
         private void ReadyCheck()
         {
-            if (CatalogueActions == null)
-            {
-                CatalogueActions = BusinessObjectLayer.ContainerManager.ProvideImplementation(CatalogueActions);
-            }
+            CatalogueActions = CatalogueActions ?? ContainerManager.ProvideImplementation(CatalogueActions);
 
             if (!CatalogueActions.IsApplicationReady())
             {
@@ -61,11 +58,19 @@ namespace Cataloguer
             }
         }
 
-        private void addRecordButton_Click(object sender, RoutedEventArgs e)
+        private void AddRecordButton_Click(object sender, RoutedEventArgs e)
         {
             if(!String.IsNullOrEmpty(itemEntryText.Text))
             {
-                CatalogueRecords.Add(new CatalogueRecord() { Description = itemEntryText.Text, Id = Guid.NewGuid(), Category = this.Category});
+                CatalogueRecord recordedItem = CatalogueActions.AddRecord(itemEntryText.Text, Category);
+                if(recordedItem != null)
+                {
+                    CatalogueRecords.Add(new CatalogueRecord() { Description = itemEntryText.Text, Id = Guid.NewGuid(), Category = this.Category });
+                }
+                else
+                {
+                    MessageBox.Show("Unable to add new catalogue item", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 

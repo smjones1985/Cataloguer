@@ -58,7 +58,11 @@ namespace CaloguerTest
 
         public T InsertData<T>(string id, T catalogueItem)
         {
-            throw new NotImplementedException();
+            IList<object> insertItem = new List<object>();
+            insertItem.Add(id);
+            insertItem.Add(catalogueItem);
+            TestList.Add(insertItem);
+            return catalogueItem;
         }
 
         public void UpdateData(string id, object catalogueItem)
